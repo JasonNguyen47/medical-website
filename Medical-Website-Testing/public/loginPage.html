@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<HTML>
+    <Head>
+        <title>Login Page</title>
+    </Head>
+
+    <body>
+        <p>Login Page</p>
+
+        <form id = "formID" method = "POST" action = "/login">
+            <label for = "userName">User Name: </label>
+            <input type = "text" id = "userName" name = "uName">
+
+            <label for = "passWord"> Password: </label>
+            <input type = "text" id = passWord name = "pWord">
+
+            <input type = "submit" value = "Submit" id = "sumbitButton">
+        </form>
+
+        <button id = "logout-button"> 
+            Logout Button
+        </button>
+
+        
+        <script>
+
+            const formHTML = document.getElementById("formID");
+            formHTML.addEventListener("submit", async function (e) {
+                e.preventDefault();
+
+                const userName = document.getElementById("userName").value;
+                const passWord = document.getElementById("passWord").value;
+
+
+                const respone = await fetch("/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ userName, passWord })
+                });
+                
+                const loginData = await respone.json();
+
+                if (!loginData.success) {
+                    alert("LOGIN NOT WORKING");
+                } else {
+                    console.log("Sending to Home Now");
+                    window.location.href = "/home";
+                }
+                
+
+            });
+
+            const logoutButton = document.getElementById("logout-button");
+
+            logoutButton.addEventListener("click", async () => {
+                
+                const reponse = await fetch("/logout", {
+                        method: "POST",
+                    })
+
+                const logoutData = await reponse.json();
+
+                if (!logoutData.success) {
+                    alert("Logout did not work");
+                } else {
+                    alert("Logout Worked");
+                    window.location.href = "/webpage";
+                }
+            
+
+            });
+            
+        </script>
+    </body>
+
+</HTML>
