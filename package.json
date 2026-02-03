@@ -1,5 +1,8 @@
 {
     "name": "medical-website",
     "version": "1.0.0",
-    "main": "backend/server.js"
+    "main": "backend/server.js",
+    "dependencies": {
+        "dotenv": "^17.2.3"
+    }
 }

@@ -1,8 +1,29 @@
-
-const path = require("path");
+const jwt = require("jsonwebtoken");
 
 function login(req, res) {
-    res.sendFile(path.join(__dirname, '..', '..', 'frontend', 'pages', 'login.html'));
+    
+    const { userName, passWord } = req.body;
+
+
+    if (userName == "Jason") {
+        res.status(401).json({ error: "Not valid Name"});
+    } else {
+        const token = jwt.sign(
+            { userName, role: "doctor"},
+            process.env.jwtKey,
+            { expiresIn: "1h"}
+        );
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: false, // only when in Production
+            sameSite: "strict"
+        })
+        res.status(200).json({ success: true });
+    }
 }
+
+
+
 
 module.exports = { login };
