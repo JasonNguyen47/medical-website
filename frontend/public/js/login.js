@@ -26,7 +26,14 @@ formHtml.addEventListener("submit", async function (e) {
     const loginData = await respone.json();
 
     if (loginData.success) {
-        window.location.href = "/dashboard";
+        console.log(`Position: ${loginData.position}`);
+        switch (loginData.position){
+            case "doctor":
+                window.location.href = "/DoctorDashBoard"
+                break;
+            default:
+                window.location.href = "/dashboard";
+        }  
     } else {
         alert(loginData.error);
     }

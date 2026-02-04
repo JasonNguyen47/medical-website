@@ -10,13 +10,17 @@ router.get("/home", (req, res) => {
 })
 
 router.get("/login", (req, res) => {
-    res.sendFile(path.join(PAGES_ROOT, "login.html"))
+    res.sendFile(path.join(PAGES_ROOT, "login.html"));
 });
 
 router.post("/loginUser", readInput, login);
 
 router.get("/dashboard", authenticateUser, (req, res) => {
-    res.sendFile(path.join(PAGES_ROOT, "dashboard.html"))
+    res.sendFile(path.join(PAGES_ROOT, "dashboard.html"));
 });
+
+router.get("/DoctorDashBoard", authenticateUser, (req, res) => {
+    res.sendFile(path.join(PAGES_ROOT, "dashboardDoctor.html"));
+})
 
 module.exports = router;

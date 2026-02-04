@@ -19,7 +19,7 @@ function login(req, res) {
             secure: false, // only when in Production
             sameSite: "strict"
         })
-        res.status(200).json({ success: true });
+        res.status(200).json({ success: true, position: "doctor"});
     }
 }
 
