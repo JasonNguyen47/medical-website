@@ -1,8 +1,5 @@
 console.log("login.js is loaded");
 
-const createdElement = document.createElement("p");
-createdElement.textContent = "Created from JS file";
-document.body.appendChild(createdElement);
 
 const formHtml = document.getElementById("formID");
 
@@ -29,7 +26,10 @@ formHtml.addEventListener("submit", async function (e) {
         console.log(`Position: ${loginData.position}`);
         switch (loginData.position){
             case "doctor":
-                window.location.href = "/DoctorDashBoard"
+                window.location.href = "/DoctorDashBoard";
+                break;
+            case "nurse":
+                window.location.href = "/DoctorDashNurse";
                 break;
             default:
                 window.location.href = "/dashboard";
@@ -38,6 +38,24 @@ formHtml.addEventListener("submit", async function (e) {
         alert(loginData.error);
     }
     
-
-
 })
+
+const logoutButton = document.getElementById("logoutButton");
+
+logoutButton.addEventListener("click", async function(e) {
+    
+    const response = await fetch("/logoutUser", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+
+    const reponseData = await response.json();
+    if (reponseData.success) {
+        alert("You have been logout");
+    } else {
+        alert(reponseData.message);
+    }
+}) 
+

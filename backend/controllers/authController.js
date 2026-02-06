@@ -9,7 +9,7 @@ function login(req, res) {
         res.status(401).json({ error: "Not valid Name"});
     } else {
         const token = jwt.sign(
-            { userName, role: "doctor"},
+            { userName, role: "nurse"},
             process.env.jwtKey,
             { expiresIn: "1h"}
         );
@@ -19,11 +19,21 @@ function login(req, res) {
             secure: false, // only when in Production
             sameSite: "strict"
         })
-        res.status(200).json({ success: true, position: "doctor"});
+        res.status(200).json({ success: true, position: "nurse"});
+    }
+}
+
+function logout(req, res) {
+    token = req.cookies.token;
+    
+    if (!token) {
+        return res.status(200).json({ success: false, message: "No User Loggined"});
+    } else {
+        res.clearCookie("token");
+        res.status(200).json({ success: true });
     }
 }
 
 
 
-
-module.exports = { login };
+module.exports = { login, logout };
